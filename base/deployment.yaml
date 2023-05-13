@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 2fauth
+  labels:
+    app.kubernetes.io/name: 2fauth
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    spec:
+      containers:
+        - name: 2fauth
+          image: "2fauth/2fauth"
+          imagePullPolicy: Always
+          env:
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: 2fauth-app-key
+                  key: app-key
+          envFrom:
+            - configMapRef:
+                name: "2fauth-config"
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          volumeMounts:
+            - name: db-pvc
+              mountPath: /database
+      volumes:
+        - name: db-pvc
+          persistentVolumeClaim:
+            claimName: 2fauth-db-pvc
+

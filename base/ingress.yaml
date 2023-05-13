@@ -1,0 +1,19 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: 2fauth
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`2fa.hl.ancalagon.black`)
+      priority: 10
+      services:
+        - name: 2fauth
+          port: 80
+  tls:
+    certResolver: default
