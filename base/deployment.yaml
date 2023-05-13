@@ -29,10 +29,10 @@ spec:
               containerPort: 8000
               protocol: TCP
           volumeMounts:
-            - name: db-pvc
-              mountPath: /database
+            - name: 2fauth-storage
+              mountPath: /2fauth
       volumes:
-        - name: db-pvc
+        - name: 2fauth-storage
           persistentVolumeClaim:
-            claimName: 2fauth-db-pvc
+            claimName: 2fauth-storage-pvc
 
