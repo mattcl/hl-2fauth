@@ -13,7 +13,7 @@ spec:
       match: Host(`2fa.hl.ancalagon.black`)
       priority: 10
       services:
-        - name: 2fauth
+        - name: svc2fauth
           port: 80
   tls:
     certResolver: default
